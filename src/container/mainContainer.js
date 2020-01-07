@@ -2,15 +2,19 @@ import React from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import Thubmnail from '../components/thumbnail';
-import graphicsList from '../mockData';
 import  './mainContainer.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Button, Modal,  ModalBody } from 'reactstrap';
+import {getDirectories} from '../utils/ajaxUtils'
  class MainContainer extends React.Component {
+   componentDidMount(){
+     getDirectories(this.setAllData);
+   }
    state={
      selectedElement:null,
      image:null,
-     modal:false
+     modal:false,
+      structure:null
    }
    openModal=(image)=>{
      console.log('sss',image);
@@ -19,37 +23,44 @@ import { Button, Modal,  ModalBody } from 'reactstrap';
    toggal=()=>{
      this.setState({modal:!this.state.modal});
    }
-   selectElement=(e)=>{
-     this.setState({selectedElement:e.target.id})
+   setAllData=(data)=>{
+     this.setState({structure:data});
    }
-   createDirectories=(list)=>{
-     let keys=Object.keys(list);
-     return keys.map((key)=>{
-       return <div key={key} onClick={this.selectElement} className="folder" id={key}> {key}</div>;
+   selectElement=(pathName)=>{
+     getDirectories(this.setAllData,pathName);
+   }
+   createDirectories=(folders,files)=>{
+     console.log(folders,'folders')
+     let remainingCount = 15 - (folders.length+files.length);
+     let thumbArray=[];
+     folders.map((key)=>{
+       console.log(key)
+       thumbArray.push(<button tabIndex="0" key={key.DirectoryName} onClick={()=>{this.selectElement(key.DirectoryName)}} className="folder" id={key}> {key.DirectoryName}</button>);
      });
-   }
-   showList=(element)=>{
-     return graphicsList[element].map((file,index)=>{
-       return <Thubmnail key={index} element={file} index={index} toggal={this.toggal} openModal={this.openModal}/>
-     })
-     // return <div>{element}</div>
+      files.map((file,index)=>{
+         thumbArray.push(<Thubmnail key={file.caption} element={file} index={index} toggal={this.toggal} openModal={this.openModal}/>)
+       })
+     for (var i = 0; i < remainingCount; i++) {
+       thumbArray.push(<div className="folder light"></div>)
+     }
+     console.log(thumbArray,'thumbArray')
+     return thumbArray;
    }
   render(){
-    const {selectedElement}=this.state;
+    console.log(this.state);
+    const {selectedElement,structure}=this.state;
     return (
       <div className="App">
-      <Header/>
+      <Header callback={this.setAllData}/>
         <div id="container">
-        {!selectedElement?this.createDirectories(graphicsList):this.showList(selectedElement)}
+        {structure && this.createDirectories(this.state.structure.Directories,this.state.structure.Files)}
         </div>
         <Footer/>
-
         <Modal fade="true" size="lg" isOpen={this.state.modal} toggle={this.toggle}>
        <ModalBody>
        <Button color="danger" onClick={this.toggal}>X</Button>
           <img src={this.state.image} style={{width:'100%',marginTop: '12px'}} />
        </ModalBody>
-
      </Modal>
 
       </div>
