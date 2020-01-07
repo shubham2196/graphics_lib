@@ -1,7 +1,7 @@
 import React from 'react';
 import './thumbnail.css'
 import SEARCHLOGO from '../assets/search.png';
-import {getSiteDirectories} from '../utils/ajaxUtils';
+import {getSiteDirectories,api} from '../utils/ajaxUtils';
  class Header extends React.Component {
    siteMap=()=>{
      let siteMap=window.oldPath.substr(window.oldPath.indexOf("=")+1).split("/");
@@ -32,7 +32,7 @@ color: 'gray',
 fontWeight: 'bold',
 paddingLeft: '30px',
 }}>
-<label>Mitr Graphics Library {this.siteMap()}</label>
+<label><span onClick={()=>{this.siteMapClicked(api.DIRECTORY)}} className="link"> Mitr Graphics Library</span> {this.siteMap()}</label>
 <div style={{    position: 'absolute',
     right: '130px'}}>
 <input style={{marginRight: '10px',

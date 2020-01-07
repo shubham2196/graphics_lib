@@ -54,3 +54,6 @@ z-index: 1;
   color:#33b0f0;
   cursor: pointer;
 }
+button{
+      border: 0;
+}

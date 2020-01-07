@@ -28,3 +28,6 @@ cursor: pointer;
     overflow: auto;
     height: 500px;
 }
+button{
+      border: 0;
+}

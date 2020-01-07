@@ -1,4 +1,4 @@
-const api={
+export const api={
   DIRECTORY:"http://172.19.4.23/api/FileManager",
   DOWNLOAD:"http://172.19.4.23/api/FileManager",
 }
