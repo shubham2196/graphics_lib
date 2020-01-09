@@ -35,10 +35,10 @@ import {getDirectories} from '../utils/ajaxUtils'
      let thumbArray=[];
      folders.map((key)=>{
        console.log(key)
-       thumbArray.push(<button tabIndex="0" key={key.DirectoryName} onClick={()=>{this.selectElement(key.DirectoryName)}} className="folder" id={key}> {key.DirectoryName}</button>);
+       thumbArray.push(<button tabIndex="0" key={Math.random()+new Date().getMilliseconds()} onClick={()=>{this.selectElement(key.DirectoryName)}} className="folder" id={key}> {key.DirectoryName}</button>);
      });
       files.map((file,index)=>{
-         thumbArray.push(<Thubmnail key={file.caption} element={file} index={index} toggal={this.toggal} openModal={this.openModal}/>)
+         thumbArray.push(<Thubmnail key={Math.random()+new Date().getMilliseconds()} element={file} index={index} toggal={this.toggal} openModal={this.openModal}/>)
        })
      for (var i = 0; i < remainingCount; i++) {
        thumbArray.push(<div className="folder light"></div>)

@@ -1,8 +1,12 @@
 import React from 'react';
 import './thumbnail.css'
 import SEARCHLOGO from '../assets/search.png';
-import {getSiteDirectories,api} from '../utils/ajaxUtils';
+import {getSiteDirectories,api,getSearchResult} from '../utils/ajaxUtils';
  class Header extends React.Component {
+   search=(e)=>{
+     const {target:{value}}=e;
+     getSearchResult(value,this.props.callback)
+   }
    siteMap=()=>{
      let siteMap=window.oldPath.substr(window.oldPath.indexOf("=")+1).split("/");
      console.log(siteMap,'siteMap')
@@ -35,7 +39,7 @@ paddingLeft: '30px',
 <label><span onClick={()=>{this.siteMapClicked(api.DIRECTORY)}} className="link"> Mitr Graphics Library</span> {this.siteMap()}</label>
 <div style={{    position: 'absolute',
     right: '130px'}}>
-<input style={{marginRight: '10px',
+<input placeholder="Search..." onKeyUp={this.search} style={{paddingLeft:'10px',marginRight: '10px',
     width: '250px',
     height: '35px',
     borderRadius: '10px',
