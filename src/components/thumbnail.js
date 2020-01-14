@@ -10,7 +10,7 @@ import {downloadFile} from '../utils/ajaxUtils';
     return (
       <div style={{width: "20%",
     height: "100%"}}>
-      <button tabIndex="0" onClick={()=>{openModal(element.thumbnail);toggal()}} data-toggle="modal" data-target="#largeModal" id={"thumbnail"+index} className="thumbnail">
+      <button tabIndex="0" onClick={()=>{openModal(element);toggal()}} data-toggle="modal" data-target="#largeModal" id={"thumbnail"+index} className="thumbnail">
         <img alt={element.caption} className="thumbicon" src={element.thumbnail}/>
         <button className="downloadicon" onClick={(e)=>{
           e.stopPropagation();

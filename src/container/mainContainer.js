@@ -4,7 +4,7 @@ import Footer from "../components/footer";
 import Thubmnail from "../components/thumbnail";
 import "./mainContainer.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { Button, Modal, ModalBody } from "reactstrap";
+import ModalDialog from "../components/modal";
 import { getDirectories } from "../utils/ajaxUtils";
 import PaginationComponent from "../components/PaginationComponent";
 class MainContainer extends React.Component {
@@ -13,12 +13,12 @@ class MainContainer extends React.Component {
   }
   state = {
     selectedElement: null,
-    image: null,
+    element: null,
     modal: false,
     structure: null
   };
-  openModal = image => {
-    this.setState({ image: image });
+  openModal = element => {
+    this.setState({ element: element });
   };
   toggal = () => {
     this.setState({ modal: !this.state.modal });
@@ -50,7 +50,7 @@ class MainContainer extends React.Component {
         </button>
       );
     });
-    files.map((file, index) => {
+     files.map((file, index) => {
       thumbArray.push(
         <Thubmnail
           key={Math.random() + new Date().getMilliseconds()}
@@ -74,9 +74,9 @@ class MainContainer extends React.Component {
     return thumbArray;
   };
   render() {
-    console.log(this.state);
+    console.log(this.state,'shubham');
     const { selectedElement, structure } = this.state;
-    return (
+    return structure===null?<div/>:(
       <div className="App1" style={{ height: "100%", width: "100%",position: "absolute" }}>
         <div style={{ height: "11%", width: "100%" }}>
           <Header callback={this.setAllData} />
@@ -108,22 +108,7 @@ class MainContainer extends React.Component {
     bottom: "1%" }}>
           <Footer />
         </div>
-        <Modal
-          fade="true"
-          size="lg"
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-        >
-          <ModalBody>
-            <Button color="danger" onClick={this.toggal}>
-              X
-            </Button>
-            <img
-              src={this.state.image}
-              style={{ width: "100%", marginTop: "12px" }}
-            />
-          </ModalBody>
-        </Modal>
+      <ModalDialog isOpen={this.state.modal} element={this.state.element} toggal={this.toggal}/>
       </div>
     );
   }
